@@ -1,5 +1,6 @@
-pycryptodome-3.15.0
-Crypto-1.4.1 certifi==2022.6.15
+pycryptodome==3.15.0
+Crypto==1.4.1 
+certifi==2022.6.15
 charset-normalizer==2.0.12
 crypto==1.4.1
 cycler==0.11.0
