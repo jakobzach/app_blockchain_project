@@ -1,9 +1,9 @@
 # following imports are required by PKI
-import crypto
-import crypto.Random
-from crypto.Hash import SHA
-from crypto.PublicKey import RSA
-from crypto.Signature import PKCS1_v1_5
+import Crypto
+import Crypto.Random
+from Crypto.Hash import SHA
+from Crypto.PublicKey import RSA
+from Crypto.Signature import PKCS1_v1_5
 import binascii
 
 ## Client class definition
