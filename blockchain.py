@@ -1,3 +1,4 @@
+from pydoc import cli
 import client
 import transactions
 import block
@@ -9,6 +10,7 @@ last_block_hash = ""
 
 ## creating genesis block
 Vincent = client.Client()
+Lia = client.Client()
 
 t0 = transactions.Transaction("Genesis",Vincent.identity,float(69000))
 
@@ -17,7 +19,7 @@ block0.previous_block_hash = None
 Nonce = None
 
 block0.verified_transactions.append(t0)
-digest = hash (block0)
+digest = hash(block0)
 last_block_hash = digest
 
 ## creating the blockchain
@@ -53,10 +55,18 @@ def mine(message, difficulty=1):
 mine("test message", 6)
 
 last_transaction_index = 0 #tracking number of messages already mined
+t1 = transactions.Transaction(Vincent.identity,Lia.identity,float(6900))
 
 ## miner creates new block
 block1 = block.Block()
+block1.verified_transactions.append(t1)
+block1.previous_block_hash = last_block_hash
+block1.Nonce = mine(block1, 2)
 
-## need to have an open transactions pool?
+digest = hash(block1)
+PyCoins.append(block1)
+last_block_hash = digest
 
 
+last_transaction_index += 1
+last_transaction_index += 1
