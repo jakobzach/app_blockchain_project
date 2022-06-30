@@ -57,6 +57,6 @@ last_transaction_index = 0 #tracking number of messages already mined
 ## miner creates new block
 block1 = block.Block()
 
-## need to have a class for an open transactions pool?
+## need to have an open transactions pool?
 
 
