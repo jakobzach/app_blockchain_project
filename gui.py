@@ -4,18 +4,15 @@ from tkinter import ttk
 import client
 import transactions
 
+# set the owner of the wallet
 Jakob = client.Client()
-Vincent = client.Client()
-t = transactions.Transaction(Jakob, Vincent.identity, 5.0 )
-signature = t.sign_transaction()
-
 
 # defining the calcualtion for the balance
 def calculate(*args):
     try:
         value = float(amount.get())
-        balance_change = float(balance.get())
-        balance.set(int(balance_change - value))
+        Jakob.change_balance(-value)
+        balance.set(int(Jakob.retrieve_balance()))
     except ValueError:
         pass
 
@@ -28,7 +25,6 @@ mainframe = ttk.Frame(root, padding="3 3 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
-
 
 # create widget to input the number for the amount we want to transfer
 amount = StringVar()
@@ -43,12 +39,12 @@ receiver_entry.grid(column=3, row=4, sticky=(W, E))
 # create widget that displays the resulting amount in the wallet after the transaction is made 
 balance = StringVar()
 ttk.Label(mainframe, textvariable=balance).grid(column=3, row=1, sticky=(W, E))
-balance.set(int(100)) ##needs to change
+balance.set(Jakob.retrieve_balance()) ##needs to change
 
-# create variable to display wallet id of the sender
-senderid = StringVar()
-ttk.Label(mainframe, textvariable=senderid).grid(column=3, row=2, sticky=W)
-senderid.set(t.senderid()) ##needs to change
+# create variable to display wallet id of the wallet owner
+wallet_owner = StringVar()
+ttk.Label(mainframe, textvariable=wallet_owner).grid(column=3, row=2, sticky=W)
+wallet_owner.set(Jakob.identity)
 
 # create "send" button that when pressed it performs the transaction
 ttk.Button(mainframe, text="Send", command=calculate).grid(column=4, row=6, sticky=W)

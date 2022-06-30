@@ -61,7 +61,3 @@ class Transaction:
         print ('-----')
         print ("time: " + str(dict['time']))
         print ('-----')
-
-    def senderid(self):
-        dict = self.to_dict()
-        print (dict['sender'])
