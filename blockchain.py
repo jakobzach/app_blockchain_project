@@ -28,7 +28,7 @@ def dump_blockchain(chain):
         block_temp = PyCoins[x]
         print ("block # " + str(x))
     for transaction in block_temp.verified_transactions:
-        transaction.display_transaction(transaction)
+        transaction.display_transaction()
         print ('--------------')
         print ('=====================================')
 
