@@ -50,9 +50,9 @@ class Transaction:
         h = SHA.new(str(self.to_dict()).encode('utf8')) # use the built-in PKI with SHA algorithm
         return binascii.hexlify(signer.sign(h)).decode('ascii') # decode to get the ASCII representation for printing and storing it in our blockchain
 
-    def display_transaction(transaction):
+    def display_transaction(self):
         '''using the dictionary keys, the various values are printed on the console'''
-        dict = transaction.to_dict()
+        dict = self.to_dict()
         print ("sender: " + dict['sender'])
         print ('-----')
         print ("recipient: " + dict['recipient'])
@@ -61,3 +61,7 @@ class Transaction:
         print ('-----')
         print ("time: " + str(dict['time']))
         print ('-----')
+
+    def senderid(self):
+        dict = self.to_dict()
+        print (dict['sender'])
