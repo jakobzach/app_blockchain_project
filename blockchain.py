@@ -1,6 +1,7 @@
 import client
 import transactions
 import block
+import hashlib
 
 # defining global variable for last_block hash which is needed for block class
 last_block_hash = ""
@@ -9,7 +10,7 @@ last_block_hash = ""
 ## creating genesis block
 Vincent = client.Client()
 
-t0 = transactions.Transaction("Genesis",Vincent.identity,69000)
+t0 = transactions.Transaction("Genesis",Vincent.identity,float(69000))
 
 block0 = block.Block()
 block0.previous_block_hash = None
@@ -34,4 +35,28 @@ def dump_blockchain(chain):
 
 PyCoins.append(block0)
 
-dump_blockchain(PyCoins)
+
+## adding mining functionality
+def sha256(message):
+    return hashlib.sha256(message.encode('ascii')).hexdigest()
+
+def mine(message, difficulty=1):
+    assert difficulty >= 1
+    prefix = '1' * difficulty
+    for i in range(100000):
+        digest = sha256(str(hash(message)) + str(i))
+        if digest.startswith(prefix):
+            print ("after " + str(i) + " iterations found nonce: "+ digest)
+            return digest
+    print('Calculation is too complex for given constraints.')
+
+mine("test message", 6)
+
+last_transaction_index = 0 #tracking number of messages already mined
+
+## miner creates new block
+block1 = block.Block()
+
+## need to have a class for an open transactions pool?
+
+
