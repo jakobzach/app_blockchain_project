@@ -13,7 +13,7 @@ class Client:
       self._private_key = RSA.generate(1024, random)
       self._public_key = self._private_key.publickey()
       self._signer = PKCS1_v1_5.new(self._private_key)
-      self.__balance = 100
+      self.__balance = 0
 
    @property
    def identity(self):
@@ -24,3 +24,8 @@ class Client:
    
    def retrieve_balance(self):
       return self.__balance
+   
+   def trunc_identity(self, identity:str):
+      first7 = identity[0:6]
+      last7 = identity[-6:]
+      return f'{first7}...{last7}'
