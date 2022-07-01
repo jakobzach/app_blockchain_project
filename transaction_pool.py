@@ -5,7 +5,7 @@ class TransactionPool:
         '''instantiates TransactionPool object'''
         self.__transactions = [] 
     
-    def retr_transaction_pool(self):
+    def retr_transaction_pool(self) -> list:
         '''takes no arguments and returns all transaction objects in a list'''
         with open('transactions_file', 'rb') as transactions_file:
             # unpickling every object in the file, each unpickling operation unpickles just one object at a time 
@@ -16,7 +16,7 @@ class TransactionPool:
                 pass
             return self.__transactions
 
-    def add_to_transaction_pool(self, transaction: object):
+    def add_to_transaction_pool(self, transaction: object) -> None:
         '''takes a transaction object as argument and appends it to transaction pool'''
         with open('transactions_file', 'ab+') as transactions_file:
             pickle.dump(transaction, transactions_file)
