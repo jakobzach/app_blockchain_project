@@ -1,22 +1,22 @@
-from mimetypes import init
-import json
-
+import pickle # used to store and retrieve Python objects
 
 class TransactionPool:
     def __init__(self) -> None:
-        self.__transaction_pool = []
+        '''instantiates TransactionPool object'''
+        self.__transactions = [] 
     
     def retr_transaction_pool(self):
-        file = open('transaction_pool.txt', 'r')
-        for line in file.readlines():
-            self.__transaction_pool.append(line.rstrip('\n'))
-            #file.read().split('\n')
-        file.close()
-        return self.__transaction_pool
+        '''takes no arguments and returns all transaction objects in a list'''
+        with open('transactions_file', 'rb') as transactions_file:
+            # unpickling every object in the file, each unpickling operation unpickles just one object at a time 
+            try:
+                while True:
+                    self.__transactions.append(pickle.load(transactions_file))
+            except EOFError:
+                pass
+            return self.__transactions
 
-    def add_to_transaction_pool(self, transaction):
-        file = open('transaction_pool.txt','a')
-        #self.__transaction_pool.append(transaction)
-        #print(self.__transaction_pool)
-        file.write(transaction+'\n')
-        file.close()
+    def add_to_transaction_pool(self, transaction: object):
+        '''takes a transaction object as argument and appends it to transaction pool'''
+        with open('transactions_file', 'ab+') as transactions_file:
+            pickle.dump(transaction, transactions_file)
