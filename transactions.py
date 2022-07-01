@@ -37,11 +37,11 @@ class Transaction:
         else:
             identity = self.sender.identity
 
-        return collections.OrderedDict({
+        return {
             'sender': identity,
             'recipient': self.recipient,
             'value': self.value,
-            'time' : self.time})
+            'time' : self.time}
 
     def sign_transaction(self):
         '''sign the above dictionary object using the private key of the sender'''
