@@ -29,7 +29,12 @@ sig = t.sign_transaction(client_obj)
 
 print(str(t.to_dict()).encode('utf8'))
 
-def transaction_verifier(transaction, signature, client_object):
+def transaction_verifier(transaction, signature):
+    
+    for i in clients:
+        if i.identity == transaction.sender:
+            client_obj = i
+
     hash = SHA256.new(str(transaction.to_dict()).encode('utf8')) 
     verifier = PKCS115_SigScheme(client_obj.get_key()[1])
     try:
@@ -39,7 +44,7 @@ def transaction_verifier(transaction, signature, client_object):
         print("Signature is invalid.")
 
 
-transaction_verifier(t, sig, client_obj)
+transaction_verifier(t, sig)
 
 pool = transaction_pool.TransactionPool()
 
