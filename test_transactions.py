@@ -34,8 +34,11 @@ t4 = transactions.Transaction(Vincent, Lia.identity, 4.0 )
 t4.sign_transaction()
 transactions_list.append(t4) # add t4 to the transaction queue
 
+history_list = []
 # blockchain managers may periodically like to review the contents of transaction queue
 for transaction in transactions_list:
     '''iterate the transactions list and for each referenced transaction, call the display_transaction function'''
-    transaction.display_transaction()
-    print ('--------------')
+    transaction_info = transaction.display_transaction('trunc')[1], transaction.display_transaction('trunc')[2], transaction.display_transaction('trunc')[3]
+    history_list.append(transaction_info)
+
+

@@ -11,11 +11,23 @@ class Client:
    def __init__(self):
       self.keyPair = RSA.generate(bits=1024)
       self.__public_key = self.keyPair.publickey()
+      self.__balance = 0
+      
+   @property
+   def identity(self):
+      return binascii.hexlify(self.__public_key.exportKey(format='DER')).decode('ascii')
    
    # accessor
    def get_key(self):
       return self.keyPair, self.__public_key
-
-   @property
-   def identity(self):
-      return binascii.hexlify(self.__public_key.exportKey(format='DER')).decode('ascii')
+      
+   def retrieve_balance(self):
+      return self.__balance
+   
+   def change_balance(self, amount):
+      self.__balance += amount
+      
+   def trunc_identity(self, identity:str):
+      first7 = identity[0:6]
+      last7 = identity[-6:]
+      return f'{first7}...{last7}'

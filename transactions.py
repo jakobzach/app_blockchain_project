@@ -31,22 +31,21 @@ class Transaction:
         self.value = value
         self.time = datetime.datetime.now()
 
-    def to_dict(self): # also bad practice, there is an official method in pandas called to dict, which is overwritten by this 
+    def transaction_info_collector(self):
         '''entire transaction information accessible through a single variable'''
         if self.sender == "Genesis": # Genesis block contains the first transaction initiated by the creator of the blockchain
             identity = "Genesis"
         else:
             identity = self.sender
 
-        return {
-            'sender': identity,
+        return {'sender': identity,
             'recipient': self.recipient,
             'value': self.value,
             'time' : self.time}
 
     def sign_transaction(self, client_object):
         '''sign the above dictionary object using the private key of the sender'''
-        hash = SHA256.new(str(self.to_dict()).encode('utf8')) # calculate the hash of the input (the transaction in our case)
+        hash = SHA256.new(str(self.transaction_info_collector()).encode('utf8')) # calculate the hash of the input (the transaction in our case)
         keyPair = client_object.get_key()[0] # get the key pair
         signer = PKCS115_SigScheme(keyPair) # sign the hash 
         signature = signer.sign(hash) # sign the hash
@@ -54,7 +53,7 @@ class Transaction:
 
     def display_transaction(self):
         '''using the dictionary keys, the various values are printed on the console'''
-        dict = self.to_dict() ## we should call this differently, naming a dictionary 'dict' is bad practice, becuse its a reserved word (dict() is used to initialize a dictionary for example)
+        dict = self.transaction_info_collector() ## we should call this differently, naming a dictionary 'dict' is bad practice, becuse its a reserved word (dict() is used to initialize a dictionary for example)
         print ("sender: " + dict['sender'])
         print ('-----')
         print ("recipient: " + dict['recipient'])
@@ -64,5 +63,15 @@ class Transaction:
         print ("time: " + str(dict['time']))
         print ('-----')
 
-    def __str__(self) -> str:
-        return str(self.sender) + str(self.recipient) + str(self.value)
+    def get_transaction_details(self, length:str='full'):
+        '''using the dictionary keys, the various values are printed on the console'''
+        transaction_dict = self.transaction_info_collector()
+        if length == 'trunc':
+            sender = self.sender.trunc_identity(transaction_dict['sender'])
+            recipient = self.sender.trunc_identity(transaction_dict['recipient'])
+        else:
+            sender = transaction_dict['sender']
+            recipient = transaction_dict['recipient']
+        value = str(transaction_dict['value'])
+        time = str(transaction_dict['time'])
+        return sender, recipient, value, time
