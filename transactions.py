@@ -37,11 +37,11 @@ class Transaction:
         else:
             identity = self.sender.identity
 
-        return collections.OrderedDict({
+        return {
             'sender': identity,
             'recipient': self.recipient,
             'value': self.value,
-            'time' : self.time})
+            'time' : self.time}
 
     def sign_transaction(self):
         '''sign the above dictionary object using the private key of the sender'''
@@ -49,6 +49,7 @@ class Transaction:
         signer = PKCS1_v1_5.new(private_key) # use the built-in PKI with SHA algorithm
         h = SHA.new(str(self.transaction_info_collector()).encode('utf8')) # use the built-in PKI with SHA algorithm
         return binascii.hexlify(signer.sign(h)).decode('ascii') # decode to get the ASCII representation for printing and storing it in our blockchain
+
 
     def display_transaction(self, length:str='full'):
         '''using the dictionary keys, the various values are printed on the console'''
