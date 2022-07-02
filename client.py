@@ -26,8 +26,3 @@ class Client:
    
    def change_balance(self, amount):
       self.__balance += amount
-      
-   def trunc_identity(self, identity:str):
-      first7 = identity[0:6]
-      last7 = identity[-6:]
-      return f'{first7}...{last7}'

@@ -53,25 +53,32 @@ class Transaction:
 
     def display_transaction(self):
         '''using the dictionary keys, the various values are printed on the console'''
-        dict = self.transaction_info_collector() ## we should call this differently, naming a dictionary 'dict' is bad practice, becuse its a reserved word (dict() is used to initialize a dictionary for example)
-        print ("sender: " + dict['sender'])
+        transaction_dict = self.transaction_info_collector() ## we should call this differently, naming a dictionary 'dict' is bad practice, becuse its a reserved word (dict() is used to initialize a dictionary for example)
+        print ("sender: " + transaction_dict['sender'])
         print ('-----')
-        print ("recipient: " + dict['recipient'])
+        print ("recipient: " + transaction_dict['recipient'])
         print ('-----')
-        print ("value: " + str(dict['value']))
+        print ("value: " + str(transaction_dict['value']))
         print ('-----')
-        print ("time: " + str(dict['time']))
+        print ("time: " + str(transaction_dict['time']))
         print ('-----')
+
+    def trunc_identity(self, identity:str):
+      first7 = identity[0:7]
+      last7 = identity[-7:]
+      return f'{first7}...{last7}'
 
     def get_transaction_details(self, length:str='full'):
         '''using the dictionary keys, the various values are printed on the console'''
         transaction_dict = self.transaction_info_collector()
         if length == 'trunc':
-            sender = self.sender.trunc_identity(transaction_dict['sender'])
-            recipient = self.sender.trunc_identity(transaction_dict['recipient'])
+            sender = self.trunc_identity(transaction_dict['sender'])
+            recipient = self.trunc_identity(transaction_dict['recipient'])
         else:
             sender = transaction_dict['sender']
             recipient = transaction_dict['recipient']
         value = str(transaction_dict['value'])
         time = str(transaction_dict['time'])
         return sender, recipient, value, time
+
+    

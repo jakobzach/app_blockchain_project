@@ -17,6 +17,11 @@ clients = [Jakob, Vincent, Lia, Costanza]
 
 t = transactions.Transaction(Jakob.identity, Vincent.identity, 5.0)
 
+print(t.get_transaction_details('trunc')[0])
+print(t.get_transaction_details('trunc')[1])
+print(t.get_transaction_details('trunc')[2])
+print(t.get_transaction_details('trunc')[3])
+
 #print(hex(sig))
 
 for i in clients:
@@ -27,15 +32,14 @@ print(client_obj)
 
 sig = t.sign_transaction(client_obj) 
 
-print(str(t.to_dict()).encode('utf8'))
+print(str(t.transaction_info_collector()).encode('utf8'))
 
 def transaction_verifier(transaction, signature):
-    
     for i in clients:
         if i.identity == transaction.sender:
             client_obj = i
 
-    hash = SHA256.new(str(transaction.to_dict()).encode('utf8')) 
+    hash = SHA256.new(str(transaction.transaction_info_collector()).encode('utf8')) 
     verifier = PKCS115_SigScheme(client_obj.get_key()[1])
     try:
         verifier.verify(hash, signature)
