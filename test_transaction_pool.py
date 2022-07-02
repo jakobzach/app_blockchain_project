@@ -10,4 +10,5 @@ t0 = transactions.Transaction("Genesis",Vincent.identity,float(69000))
 
 pool.add_to_transaction_pool(t0)
 
-print(pool.retr_transaction_pool())
+for i in pool.retr_transaction_pool():
+    print(i)
