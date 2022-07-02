@@ -30,7 +30,7 @@ class Transaction:
         self.value = value
         self.time = datetime.datetime.now()
 
-    def to_dict(self):
+    def transaction_info_collector(self):
         '''entire transaction information accessible through a single variable'''
         if self.sender == "Genesis": # Genesis block contains the first transaction initiated by the creator of the blockchain
             identity = "Genesis"
@@ -47,23 +47,18 @@ class Transaction:
         '''sign the above dictionary object using the private key of the sender'''
         private_key = self.sender._private_key
         signer = PKCS1_v1_5.new(private_key) # use the built-in PKI with SHA algorithm
-        h = SHA.new(str(self.to_dict()).encode('utf8')) # use the built-in PKI with SHA algorithm
+        h = SHA.new(str(self.transaction_info_collector()).encode('utf8')) # use the built-in PKI with SHA algorithm
         return binascii.hexlify(signer.sign(h)).decode('ascii') # decode to get the ASCII representation for printing and storing it in our blockchain
 
     def display_transaction(self, length:str='full'):
         '''using the dictionary keys, the various values are printed on the console'''
-        dict = self.to_dict()
+        trasnaction_dict = self.transaction_info_collector()
         if length == 'trunc':
-            sender = self.sender.trunc_identity(dict['sender'])
-            recipient = self.sender.trunc_identity(dict['recipient'])
+            sender = self.sender.trunc_identity(trasnaction_dict['sender'])
+            recipient = self.sender.trunc_identity(trasnaction_dict['recipient'])
         else:
-            sender = dict['sender']
-            recipient = dict['recipient']
-        print ("sender: " + sender)
-        print ('-----')
-        print ("recipient: " + recipient)
-        print ('-----')
-        print ("value: " + str(dict['value']))
-        print ('-----')
-        print ("time: " + str(dict['time']))
-        print ('-----')
+            sender = trasnaction_dict['sender']
+            recipient = trasnaction_dict['recipient']
+        value = str(trasnaction_dict['value'])
+        time = str(trasnaction_dict['time'])
+        return sender, recipient, value, time
