@@ -16,9 +16,10 @@ import collections
 # following imports are required by PKI (Public Key Infrastructure - to create a globally unique identification for the client)
 import Crypto
 import Crypto.Random
-from Crypto.Hash import SHA
+from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
+from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
 
 # Transactions class definition
 class Transaction:
@@ -30,12 +31,12 @@ class Transaction:
         self.value = value
         self.time = datetime.datetime.now()
 
-    def to_dict(self):
+    def to_dict(self): # also bad practice, there is an official method in pandas called to dict, which is overwritten by this 
         '''entire transaction information accessible through a single variable'''
         if self.sender == "Genesis": # Genesis block contains the first transaction initiated by the creator of the blockchain
             identity = "Genesis"
         else:
-            identity = self.sender.identity
+            identity = self.sender
 
         return {
             'sender': identity,
@@ -43,16 +44,17 @@ class Transaction:
             'value': self.value,
             'time' : self.time}
 
-    def sign_transaction(self):
+    def sign_transaction(self, client_object):
         '''sign the above dictionary object using the private key of the sender'''
-        private_key = self.sender._private_key
-        signer = PKCS1_v1_5.new(private_key) # use the built-in PKI with SHA algorithm
-        h = SHA.new(str(self.to_dict()).encode('utf8')) # use the built-in PKI with SHA algorithm
-        return binascii.hexlify(signer.sign(h)).decode('ascii') # decode to get the ASCII representation for printing and storing it in our blockchain
+        hash = SHA256.new(str(self.to_dict()).encode('utf8')) # calculate the hash of the input (the transaction in our case)
+        keyPair = client_object.get_key()[0] # get the key pair
+        signer = PKCS115_SigScheme(keyPair) # sign the hash 
+        signature = signer.sign(hash) # sign the hash
+        return signature
 
     def display_transaction(self):
         '''using the dictionary keys, the various values are printed on the console'''
-        dict = self.to_dict()
+        dict = self.to_dict() ## we should call this differently, naming a dictionary 'dict' is bad practice, becuse its a reserved word (dict() is used to initialize a dictionary for example)
         print ("sender: " + dict['sender'])
         print ('-----')
         print ("recipient: " + dict['recipient'])
