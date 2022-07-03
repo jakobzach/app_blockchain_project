@@ -14,5 +14,5 @@ class Block:
     def retrieve_block(self):
         return self.__verified_transactions, self.__previous_block_hash, self.__Nonce
 
-    def __str__(self) -> str:
-        return str(self.previous_block_hash) + '\n' + str(self.Nonce) + '\n' + str(self.verified_transactions)
+    # def __str__(self) -> str:
+    #     return str(self.previous_block_hash) + '\n' + str(self.Nonce) + '\n' + str(self.verified_transactions)

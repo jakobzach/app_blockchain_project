@@ -14,7 +14,7 @@ class Blockchain:
                     self.__chain.append(pickle.load(blockchain_file))
             except EOFError:
                 pass
-            return self.__chain
+            return self.__chain[1:]
 
     def chain_block(self, block: object) -> None:
         '''takes a block object as argument and appends it to block object'''

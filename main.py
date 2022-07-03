@@ -15,7 +15,8 @@ PyCoins_chain = blockchain.Blockchain()
 #miner1 = miner.Miner()
 # pool = transaction_pool.TransactionPool()
 pool = transaction_pool.TransactionPool()
-pool.clear_transactions()
+#pool.clear_transactions()
+PyCoins_chain.reset_blockchain()
 
 # # defining global variable for last_block hash which is needed for each new block's previous_block_hash
 # if len(PyCoins_chain.retr_blockchain()) > 0:
@@ -48,7 +49,7 @@ if miner1.verify_transaction(client_obj, new_transaction,trans_signature) == Tru
     print(len(pool.retr_transaction_pool()))
 else:
     print('Invalid transaction')
-if len(pool.retr_transaction_pool()) == 3:
+if len(pool.retr_transaction_pool()) == 2:
     new_block = block.Block()
     new_block.mine_block(pool.retr_transaction_pool(),last_block_hash, miner1.mine(new_block))
     PyCoins_chain.chain_block(new_block)

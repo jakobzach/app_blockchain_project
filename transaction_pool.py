@@ -15,7 +15,7 @@ class TransactionPool:
                     self.__transactions.append(pickle.load(transactions_file))
             except EOFError:
                 pass
-            return self.__transactions
+            return self.__transactions[1:]
 
     def add_to_transaction_pool(self, transaction: object) -> None:
         '''takes a transaction object as argument and appends it to transaction pool'''
