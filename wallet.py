@@ -10,16 +10,16 @@ import transaction_pool
 import block
 import blockchain
 
-def build_transaction_history(blocks: list):
-    ''''''
+def build_transaction_history(blocks: list) -> list:
+    '''takes a list of block items and returns a list of all transaction details'''
     transaction_history_list = []
-
-    for item in blocks:
-        for record in item.retrieve_block()[0]:
+    for item in blocks: # iterate through all blocks
+        for record in item.retrieve_block()[0]: # iterate through all transactions of a block
             transaction_info = record.get_transaction_details('trunc')
             transaction_history_list.append(transaction_info)
 
     return transaction_history_list
+
 
 # defining the calcualtion for the balance
 def calculate(*args):
