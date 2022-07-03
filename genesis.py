@@ -20,3 +20,5 @@ pool.add_to_transaction_pool(first_transaction)
 
 print(pool.retr_transaction_pool())
 print(PyCoins_chain.retr_blockchain())
+print(len(pool.retr_transaction_pool()))
+print(len(PyCoins_chain.retr_blockchain()))
