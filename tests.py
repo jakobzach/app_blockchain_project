@@ -16,10 +16,10 @@ last_block_hash = ""
 pool = transaction_pool.TransactionPool()
 #pool.clear_transactions()
 testtransactions = pool.retr_transaction_pool()
-print(testtransactions)
+print(len(testtransactions))
 
 PyCoins_chain = blockchain.Blockchain()
-print(PyCoins_chain.retr_blockchain()[0].retrieve_block()[0])
+print(len(PyCoins_chain.retr_blockchain()))
 
 # if len(testtransactions) == 2:
 #     new_block = block.Block()
