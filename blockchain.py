@@ -23,6 +23,5 @@ class Blockchain:
     
     def reset_blockchain(self) -> None:
         '''takes no arguments and cleans the blockchain file'''
-        clearer = []
         with open('blockchain_file', 'wb') as blockchain_file:
-            pickle.dump(clearer, blockchain_file)
+            pickle.dump([], blockchain_file)

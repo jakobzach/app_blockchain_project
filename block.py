@@ -4,9 +4,8 @@ class Block:
         self.__previous_block_hash = ""
         self.__Nonce = ""
 
-    ## add mining method
-    # mutator
-    def mine_block(self, transactions, hash, nonce):
+    # mutator – mining method
+    def mine_block(self, transactions: list, hash, nonce) -> None:
         self.__verified_transactions = transactions
         self.__previous_block_hash = hash
         self.__Nonce = nonce
