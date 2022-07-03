@@ -38,13 +38,17 @@ for transaction in transactions_list:
 
 # defining the calcualtion for the balance
 def calculate(*args):
-    try:
-        value = float(amount.get())
-        Jakob.change_balance(-value)
-        balance.set(int(Jakob.retrieve_balance()))
-    except ValueError:
-        pass
-
+    if receiver_entry.get():
+        try:
+            value = float(amount.get())
+            Jakob.change_balance(-value)
+            balance.set(int(Jakob.retrieve_balance()))
+            ttk.Label(mainframe, text="                             ").grid(column=4, row=4, sticky=E)
+        except ValueError:
+            pass
+    else:
+        ttk.Label(mainframe, text="* mandatory field").grid(column=4, row=4, sticky=E)
+        receiver_entry.focus_set()
 
 # setting up the main application window
 root = Tk()
