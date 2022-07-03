@@ -27,35 +27,38 @@ def get_last_block_hash(blocks: list) -> str:
     return blocks[-1][2]
 
 def trigger_transaction(sender: str, recipient: str, amount: float) -> boolean:
-    # aggregate all clients
-    clients = [Jakob, Vincent, Lia, Costanza, miner1]
+    try:
+        # aggregate all clients
+        clients = [Jakob, Vincent, Lia, Costanza, miner1]
 
-    new_transaction = transactions.Transaction(Jakob.identity,Vincent.identity,float(69000)) # initiate transaction
-    
-    # identify sender using the sender's identity
-    for i in clients: 
-        if i.identity == new_transaction.sender:
-            client_obj = i
+        new_transaction = transactions.Transaction(Jakob.identity,Vincent.identity,float(69000)) # initiate transaction
+        
+        # identify sender using the sender's identity
+        for i in clients: 
+            if i.identity == new_transaction.sender:
+                client_obj = i
 
-    trans_signature = new_transaction.sign_transaction(client_obj) # sign transaction
-    if miner1.verify_transaction(client_obj, new_transaction,trans_signature) == True:
-        new_transaction.display_transaction()
-        pool.add_to_transaction_pool(new_transaction)
-        print('Valid transaction')
-        print(len(pool.retr_transaction_pool()))
-    else:
-        print('Invalid transaction')
-    if len(pool.retr_transaction_pool()) == 2:
-        new_block = block.Block()
-        new_block.mine_block(pool.retr_transaction_pool(),last_block_hash, miner1.mine(new_block))
-        PyCoins_chain.chain_block(new_block)
-        pool.clear_transactions()
-        miner1.change_balance(10)
-        print('transactions: '+ str(len(pool.retr_transaction_pool())) + ', miner balance: ' + str(miner1.retrieve_balance()))
-        return True
-    else:
-        print('transactions: '+ str(len(pool.retr_transaction_pool())) + ', miner balance: ' + str(miner1.retrieve_balance()))
-        return False
+        trans_signature = new_transaction.sign_transaction(client_obj) # sign transaction
+        if miner1.verify_transaction(client_obj, new_transaction,trans_signature) == True:
+            new_transaction.display_transaction()
+            pool.add_to_transaction_pool(new_transaction)
+            print('Valid transaction')
+            print(len(pool.retr_transaction_pool()))
+        else:
+            print('Invalid transaction')
+        if len(pool.retr_transaction_pool()) == 2:
+            new_block = block.Block()
+            new_block.mine_block(pool.retr_transaction_pool(),last_block_hash, miner1.mine(new_block))
+            PyCoins_chain.chain_block(new_block)
+            pool.clear_transactions()
+            miner1.change_balance(10)
+            print('transactions: '+ str(len(pool.retr_transaction_pool())) + ', miner balance: ' + str(miner1.retrieve_balance()))
+            return True
+        else:
+            print('transactions: '+ str(len(pool.retr_transaction_pool())) + ', miner balance: ' + str(miner1.retrieve_balance()))
+            return False
+    except ValueError:
+        pass
 
 
 
@@ -112,7 +115,7 @@ if __name__ == "__main__":
     ttk.Label(mainframe, textvariable=wallet_owner).grid(column=3, row=2, sticky=W)
 
     # create "send" button that when pressed it performs the transaction
-    ttk.Button(mainframe, text="Send", command=calculate).grid(column=5, row=6, sticky=W)
+    ttk.Button(mainframe, text="Send", command=trigger_transaction(Jakob.identity,recipient.get(),amount.get())).grid(column=5, row=6, sticky=W)
 
     # creating all remaining text labels
     ttk.Label(mainframe, text="Your balance").grid(column=2, row=1, sticky=E)
@@ -127,9 +130,6 @@ if __name__ == "__main__":
     listbox = Listbox(mainframe, listvariable=transactions_history).grid(column=2, columnspan=3, row=8, sticky=(W, E))
     transactions_history.set(build_transaction_history(PyCoins_chain.retr_blockchain()))
 
-    # record a new transaction
-    if trigger_transaction(Jakob.identity,recipient,float(amount)) == True:
-        transactions_history.set(build_transaction_history(PyCoins_chain.retr_blockchain()))
 
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)

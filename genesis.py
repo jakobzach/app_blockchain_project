@@ -15,6 +15,7 @@ pool.clear_transactions()
 PyCoins_chain.reset_blockchain()
 
 first_transaction = transactions.Transaction("Genesis",Jakob.identity,float(69000))
+Jakob.change_balance(float(69000))
 pool.add_to_transaction_pool(first_transaction)
 
 print(pool.retr_transaction_pool())
