@@ -1,4 +1,5 @@
 # import all necessary external libs
+from distutils.command.build import build
 from tkinter import *
 from tkinter import ttk
 
@@ -8,6 +9,17 @@ import transactions
 import transaction_pool
 import block
 import blockchain
+
+def build_transaction_history(blocks: list):
+    ''''''
+    transaction_history_list = []
+
+    for item in blocks:
+        for record in item.retrieve_block()[0]:
+            transaction_info = record.get_transaction_details('trunc')
+            transaction_history_list.append(transaction_info)
+
+    return transaction_history_list
 
 # defining the calcualtion for the balance
 def calculate(*args):
@@ -78,7 +90,7 @@ if __name__ == "__main__":
     # create a listbox for transactions history
     transactions_history = StringVar()
     listbox = Listbox(mainframe, listvariable=transactions_history).grid(column=2, columnspan=3, row=8, sticky=(W, E))
-    #transactions_history.set(transaction_history_list) #filter block to find Jakob's transactions
+    transactions_history.set(build_transaction_history(PyCoins_chain.retr_blockchain())) #filter block to find Jakob's transactions
 
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
