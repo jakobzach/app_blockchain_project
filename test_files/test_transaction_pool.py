@@ -1,4 +1,4 @@
-import transaction_pool
+import failed_pickle_approach.transaction_pool as transaction_pool
 import transactions
 import client
 

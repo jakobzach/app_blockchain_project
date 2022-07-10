@@ -1,8 +1,8 @@
 # import all project classes
 import client
 import transactions
-import transaction_pool
-import blockchain
+import failed_pickle_approach.transaction_pool as transaction_pool
+import failed_pickle_approach.blockchain as blockchain
 
 # this file generates the genesis transaction
 

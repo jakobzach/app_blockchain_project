@@ -5,9 +5,8 @@ import hashlib
 import client
 import transactions
 import block
-import blockchain
-import transaction_pool
-import miner
+import failed_pickle_approach.blockchain as blockchain
+import failed_pickle_approach.transaction_pool as transaction_pool
 
 # 1. instantiate blockchain
 

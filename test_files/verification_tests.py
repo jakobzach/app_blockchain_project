@@ -5,7 +5,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
 import hashlib
-import transaction_pool
+import failed_pickle_approach.transaction_pool as transaction_pool
 
 Jakob = client.Client()
 Vincent = client.Client()

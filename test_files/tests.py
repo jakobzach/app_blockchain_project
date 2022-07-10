@@ -1,7 +1,7 @@
 from cgi import test
 from numpy import block
-import transaction_pool
-import blockchain
+import failed_pickle_approach.transaction_pool as transaction_pool
+import failed_pickle_approach.blockchain as blockchain
 import block
 import client
 import transactions
