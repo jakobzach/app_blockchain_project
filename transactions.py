@@ -1,17 +1,5 @@
 # import libraries
-import hashlib
-import random
-import string
-import json
-import binascii
-import numpy as np
-import pandas as pd
-#import pylab as pl
-import matplotlib
-import matplotlib.pyplot as plt
-import logging
 import datetime
-import collections
 
 # following imports are required by PKI (Public Key Infrastructure - to create a globally unique identification for the client)
 import Crypto
@@ -25,7 +13,8 @@ from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
 class Transaction:
     # define the initialization of a transaction class 
     def __init__(self, sender, recipient, value):
-        '''client will be able to send money to somebody - client can be both a sender or a recipient of money'''
+        '''takes no inputs and does not return anything, but instantiates a client object'''
+        # client will be able to send money to somebody - client can be both a sender or a recipient of money
         self.sender = sender
         self.recipient = recipient
         self.value = value

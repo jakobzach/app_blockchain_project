@@ -1,6 +1,6 @@
 class Block:
     def __init__(self) -> None:
-        '''takes no inputs and does not return anything'''
+        '''takes no inputs and does not return anything, but instantiates a block object'''
         self.__verified_transactions = [] # list of transactions the miner verified
         self.__previous_block_hash = "" # for traceability between blocks
         self.__Nonce = "" # the miner's proof of work
@@ -13,6 +13,6 @@ class Block:
         self.__Nonce = nonce
     
     # accessor
-    def retrieve_block(self):
-        '''takes no inputs and returns in this order: list of block's transactions, previous block's hash and this block's Nonce'''
+    def retrieve_block(self) -> list:
+        '''takes no inputs and returns a list with items in this order: list of block's transactions, previous block's hash and this block's Nonce'''
         return self.__verified_transactions, self.__previous_block_hash, self.__Nonce
