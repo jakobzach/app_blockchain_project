@@ -9,7 +9,6 @@ import transactions
 Jakob = client.Client()
 
 #example of transactions list
-Jakob = client.Client()
 Vincent = client.Client()
 Lia = client.Client()
 Costanza = client.Client()

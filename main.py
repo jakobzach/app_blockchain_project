@@ -16,7 +16,7 @@ PyCoins_chain = blockchain.Blockchain()
 # pool = transaction_pool.TransactionPool()
 pool = transaction_pool.TransactionPool()
 #pool.clear_transactions()
-PyCoins_chain.reset_blockchain()
+#PyCoins_chain.reset_blockchain()
 
 # # defining global variable for last_block hash which is needed for each new block's previous_block_hash
 # if len(PyCoins_chain.retr_blockchain()) > 0:
