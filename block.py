@@ -3,7 +3,7 @@ class Block:
         '''takes no inputs and does not return anything, but instantiates a block object'''
         self.__verified_transactions = [] # list of transactions the miner verified
         self.__previous_block_hash = "" # for traceability between blocks
-        self.__Nonce = "" # the miner's proof of work
+        self.__Nonce = "" # the miner's proof of work (in our (simplified) case serves also as the new block's hash)
 
     # mutator – mining method
     def mine_block(self, transactions: list, hash: str, nonce: str) -> None:
