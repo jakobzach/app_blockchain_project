@@ -8,19 +8,22 @@ from numpy import identity
 
 # import all project classes
 import client
-# from genesis import PyCoins_chain
 import transactions
-# import transaction_pool
 import block
+
+# imports from the pickle approach that failed, see also other commented out lines (some other lines have been replaced tho, issue is not reproducable with this code)
+# from genesis import PyCoins_chain
+# import transaction_pool
 # import blockchain
+
 
 def build_transaction_history(blocks: list) -> list:
     '''takes a list of block objects and returns a list of all transaction details'''
     transaction_history_list = []
     for item in blocks: # iterate through all blocks
         for record in item.retrieve_block()[0]: # iterate through all transactions of a block
+            # in a real wallet implementation, we would filter the transactions that contain the wallet holder's ID here
             transaction_info = record.get_transaction_details('trunc')
-            # filter block to find Jakob's transactions?
             transaction_history_list.append(transaction_info)
 
     return transaction_history_list
@@ -30,6 +33,7 @@ def get_last_block_hash(blocks: list) -> str:
     return blocks[-1][2]
 
 def trigger_transaction(recipient, amount, pool, last_block_hash, clients) -> boolean:
+    '''takes recipient id string, amount as float, '''
     try:
         new_transaction_1 = transactions.Transaction(Jakob.identity,recipient.get(),float(amount.get())) # initiate transaction, not possible to store SHA in pickle, therefore storing just ID
         
@@ -69,20 +73,6 @@ def trigger_transaction(recipient, amount, pool, last_block_hash, clients) -> bo
         pass
 
 
-    # else:
-    #     print('triggered but not triggered')
-    #     pass
-
-
-
-# defining the calcualtion for the balance
-# def calculate(*args):
-#     try:
-#         value = float(amount.get())
-#         Jakob.change_balance(-value)
-#         balance.set(int(Jakob.retrieve_balance()))
-#     except ValueError:
-#         pass
 
 if __name__ == "__main__":
     # instantiate the necessary objects

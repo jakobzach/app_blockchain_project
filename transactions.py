@@ -23,7 +23,7 @@ class Transaction:
     def transaction_info_collector(self) -> dict:
         '''takes no inputs, returns a dict with all transaction info'''
         # entire transaction information accessible through a single variable
-        if self.sender == "Genesis": # Genesis block contains the first transaction initiated by the creator of the blockchain
+        if self.__sender == "Genesis": # Genesis block contains the first transaction initiated by the creator of the blockchain
             identity = "Genesis"
         else:
             identity = self.__sender
