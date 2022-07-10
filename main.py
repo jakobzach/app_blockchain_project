@@ -41,7 +41,7 @@ def trigger_transaction(recipient, amount, pool, last_block_hash, clients) -> No
         for i in clients: 
             if i.get_key()[1] == Jakob.get_key()[1]:
                 sender_obj = i
-        # identify client using the sender's identity
+        # identify client using the recipient's identity
         for i in clients:
             if str(i.identity) == str(new_transaction_1.transaction_info_collector()['recipient']):
                 recipient_obj = i
